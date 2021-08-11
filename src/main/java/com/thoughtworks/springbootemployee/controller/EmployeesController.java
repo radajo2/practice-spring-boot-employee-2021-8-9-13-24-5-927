@@ -1,13 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -17,20 +15,34 @@ public class EmployeesController {
     public EmployeesController() {
         employees.add(new Employee(1, "Joanna", 23, "female", 1000));
         employees.add(new Employee(2, "David", 23, "male", 1500));
+        employees.add(new Employee(3, "David", 23, "male", 1500));
+        employees.add(new Employee(4, "David", 23, "male", 1500));
+        employees.add(new Employee(5, "David", 23, "male", 1500));
+        employees.add(new Employee(6, "Joanna", 18, "female", 1500));
+        employees.add(new Employee(7, "David", 23, "male", 1500));
+        employees.add(new Employee(8, "David", 23, "male", 1500));
     }
 
-
     @GetMapping
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         return employees;
     }
 
     @GetMapping(path = "/{employeeId}")
-    public Employee findById(@PathVariable Integer employeeId){
+    public Employee findById(@PathVariable Integer employeeId) {
         return employees.stream()
                 .filter(employee -> employee.getId().equals(employeeId))
                 .findFirst()
                 .orElse(null);
 
+    }
+
+    @GetMapping(params = {"page","pageSize"})
+    public List<Employee> getEmployeesByPage(@RequestParam(name="page", required = true) Integer page, @RequestParam(name = "pageSize", required = true) Integer pageSize) {
+        int skipvalue = (page-1)*pageSize;
+        return employees.stream()
+                .skip(skipvalue)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 }
