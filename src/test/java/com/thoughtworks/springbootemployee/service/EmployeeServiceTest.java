@@ -1,4 +1,4 @@
-package service;
+package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.junit.jupiter.api.Test;
@@ -7,11 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.assertj.core.api.BDDAssumptions.given;

@@ -1,10 +1,9 @@
-package service;
+package com.thoughtworks.springbootemployee.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.model.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
