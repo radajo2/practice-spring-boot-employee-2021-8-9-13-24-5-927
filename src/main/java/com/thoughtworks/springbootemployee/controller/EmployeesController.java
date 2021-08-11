@@ -55,28 +55,8 @@ public class EmployeesController {
         return employeeService.addEmployee(newEmployee);
     }
 
-//    @PutMapping (path ="/{employeeId}")
-//    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeToBeUpdated){
-//        return employees.stream()
-//                .filter(employee -> employee.getId().equals(employeeId))
-//                .findFirst()
-//                .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdated))
-//                .get();
-//    }
-//
-//    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdated) {
-//        if (employeeToBeUpdated.getName() != null) {
-//            employee.setName(employeeToBeUpdated.getName());
-//        }
-//        if (employeeToBeUpdated.getAge() != null) {
-//            employee.setAge(employeeToBeUpdated.getAge());
-//        }
-//        if (employeeToBeUpdated.getGender() != null) {
-//            employee.setGender(employeeToBeUpdated.getGender());
-//        }
-//        if (employeeToBeUpdated.getSalary() != null) {
-//            employee.setSalary(employeeToBeUpdated.getSalary());
-//        }
-//        return employee;
-//    }
+    @PutMapping (path ="/{employeeId}")
+    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee updateEmployeeInfo){
+        return employeeService.updateEmployee(employeeId,updateEmployeeInfo);
+    }
 }

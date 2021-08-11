@@ -55,4 +55,30 @@ public class EmployeeService {
         employeeRepository.getEmployees().add(employeeToBeAdded);
         return employeeToBeAdded;
     }
+
+    public Employee updateEmployee(Integer employeeId, Employee updatedEmployeeInfo) {
+        return getAllEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .map(employee -> updateEmployeeInfo(employee, updatedEmployeeInfo))
+                .get();
+    }
+
+    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdated) {
+        if (employeeToBeUpdated.getName() != null) {
+            employee.setName(employeeToBeUpdated.getName());
+        }
+        if (employeeToBeUpdated.getAge() != null) {
+            employee.setAge(employeeToBeUpdated.getAge());
+        }
+        if (employeeToBeUpdated.getGender() != null) {
+            employee.setGender(employeeToBeUpdated.getGender());
+        }
+        if (employeeToBeUpdated.getSalary() != null) {
+            employee.setSalary(employeeToBeUpdated.getSalary());
+        }
+        return employee;
+    }
 }
+
