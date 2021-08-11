@@ -45,4 +45,14 @@ public class EmployeeService {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Employee addEmployee(Employee newEmployeeInfo) {
+        Employee employeeToBeAdded = new Employee(employeeRepository.getEmployees().size()+1,
+                newEmployeeInfo.getName(),
+                newEmployeeInfo.getAge(),
+                newEmployeeInfo.getGender(),
+                newEmployeeInfo.getSalary());
+        employeeRepository.getEmployees().add(employeeToBeAdded);
+        return employeeToBeAdded;
+    }
 }

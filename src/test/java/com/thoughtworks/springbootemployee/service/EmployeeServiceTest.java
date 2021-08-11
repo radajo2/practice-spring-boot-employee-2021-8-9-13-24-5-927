@@ -18,7 +18,7 @@ import static org.mockito.BDDMockito.given;
 public class EmployeeServiceTest {
     @InjectMocks
     private EmployeeService employeeService;
-    
+
     @Mock
     private EmployeeRepository employeeRepository;
 
@@ -63,6 +63,7 @@ public class EmployeeServiceTest {
         //Then
         assertEquals(employees.get(4), actualEmployee);
     }
+
     @Test
     void should_return_specific_employee_when_findByGender_given_employee_gender() {
         //given
@@ -81,7 +82,7 @@ public class EmployeeServiceTest {
         List<Employee> actualEmployees = employeeService.findByGender("male");
 
         //then
-        assertEquals(6,actualEmployees.stream().map(Employee::getGender).filter(employeeGender -> employeeGender.equals("male")).count());
+        assertEquals(6, actualEmployees.stream().map(Employee::getGender).filter(employeeGender -> employeeGender.equals("male")).count());
     }
 
     @Test
@@ -104,6 +105,25 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(mockEmployeeCount, actualCount);
+    }
+
+    @Test
+    void should_return_new_employee_when_addEmployee_given_employee_info() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        given(employeeRepository.getEmployees()).willReturn(employees);
+        Employee newEmployee = new Employee(){{
+            setName("Jungkook");
+            setAge(23);
+            setGender("male");
+            setSalary(150000);
+        }};
+
+        //when
+        employeeService.addEmployee(newEmployee);
+
+        //then
+        assertEquals(1, employees.size());
     }
 
 }
