@@ -38,6 +38,11 @@ public class EmployeesController {
         return employeeService.findById(employeeId);
     }
 
+    @GetMapping(params = {"gender"})
+    public List<Employee> getEmployeesByGender(@RequestParam("gender") String employeeGender){
+        return employeeService.findByGender(employeeGender);
+    }
+
 //    @GetMapping(params = {"page","pageSize"})
 //    public List<Employee> getEmployeesByPage(@RequestParam(name="page", required = true) Integer page, @RequestParam(name = "pageSize", required = true) Integer pageSize) {
 //        int skipvalue = (page-1)*pageSize;
@@ -47,13 +52,7 @@ public class EmployeesController {
 //                .collect(Collectors.toList());
 //    }
 //
-//    @GetMapping(params = {"gender"})
-//    public List<Employee> getEmployeesByGender(@RequestParam(name="gender", required = true) String gender){
-//        return employees.stream()
-//                .filter(employee -> employee.getGender().equals(gender))
-//                .collect(Collectors.toList());
-//    }
-//
+
 //    @PostMapping
 //    public void addEmployee(@RequestBody Employee employee) {
 //        Employee employeeToBeAdded = new Employee(employees.size()+1,

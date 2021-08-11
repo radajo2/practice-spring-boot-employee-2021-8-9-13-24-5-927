@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.model.Employee;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -26,5 +27,12 @@ public class EmployeeService {
                 .filter(employee -> employee.getId().equals(Id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Employee> findByGender(String gender) {
+        return getAllEmployees()
+                .stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
     }
 }
