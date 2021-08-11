@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-    @Autowired
     private EmployeeRepository employeeRepository;
 
     public EmployeeService(EmployeeRepository employeeRepository) {
@@ -18,6 +17,6 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getEmployees();
+        return employeeRepository.getAllEmployees();
     }
 }

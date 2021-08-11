@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,22 +12,24 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/employees")
 public class EmployeesController {
+    @Autowired
+    private EmployeeService employeeService;
     private List<Employee> employees = new ArrayList<>();
 
-    public EmployeesController() {
-        employees.add(new Employee(1, "Joanna", 23, "female", 1000));
-        employees.add(new Employee(2, "David", 23, "male", 1500));
-        employees.add(new Employee(3, "David", 23, "male", 1500));
-        employees.add(new Employee(4, "David", 23, "male", 1500));
-        employees.add(new Employee(5, "David", 23, "male", 1500));
-        employees.add(new Employee(6, "Joanna", 18, "female", 1500));
-        employees.add(new Employee(7, "David", 23, "male", 1500));
-        employees.add(new Employee(8, "David", 23, "male", 1500));
-    }
+//    public EmployeesController() {
+//        employees.add(new Employee(1, "Suho", 30, "female", 1000));
+//        employees.add(new Employee(2, "Sehun", 26, "male", 1500));
+//        employees.add(new Employee(3, "Chanyeol", 28, "male", 1500));
+//        employees.add(new Employee(4, "Xiumin", 25, "male", 1500));
+//        employees.add(new Employee(5, "Baekhyun", 22, "male", 1500));
+//        employees.add(new Employee(6, "Chen", 27, "female", 1500));
+//        employees.add(new Employee(7, "Kyungsoo", 26, "male", 1500));
+//        employees.add(new Employee(8, "Lay", 29, "male", 1500));
+//    }
 
     @GetMapping
     public List<Employee> getAllEmployees() {
-        return employees;
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping(path = "/{employeeId}")
