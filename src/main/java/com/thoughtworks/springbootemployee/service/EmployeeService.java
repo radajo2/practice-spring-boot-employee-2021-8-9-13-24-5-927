@@ -17,6 +17,14 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getAllEmployees();
+        return employeeRepository.getEmployees();
+    }
+
+    public Employee findById(Integer Id) {
+        return getAllEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(Id))
+                .findFirst()
+                .orElse(null);
     }
 }

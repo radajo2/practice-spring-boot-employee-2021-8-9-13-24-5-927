@@ -14,7 +14,8 @@ import java.util.stream.Collectors;
 public class EmployeesController {
     @Autowired
     private EmployeeService employeeService;
-    private List<Employee> employees = new ArrayList<>();
+
+//    private List<Employee> employees = new ArrayList<>();
 
 //    public EmployeesController() {
 //        employees.add(new Employee(1, "Suho", 30, "female", 1000));
@@ -34,61 +35,57 @@ public class EmployeesController {
 
     @GetMapping(path = "/{employeeId}")
     public Employee findById(@PathVariable Integer employeeId) {
-        return employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElse(null);
-
+        return employeeService.findById(employeeId);
     }
 
-    @GetMapping(params = {"page","pageSize"})
-    public List<Employee> getEmployeesByPage(@RequestParam(name="page", required = true) Integer page, @RequestParam(name = "pageSize", required = true) Integer pageSize) {
-        int skipvalue = (page-1)*pageSize;
-        return employees.stream()
-                .skip(skipvalue)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping(params = {"gender"})
-    public List<Employee> getEmployeesByGender(@RequestParam(name="gender", required = true) String gender){
-        return employees.stream()
-                .filter(employee -> employee.getGender().equals(gender))
-                .collect(Collectors.toList());
-    }
-
-    @PostMapping
-    public void addEmployee(@RequestBody Employee employee) {
-        Employee employeeToBeAdded = new Employee(employees.size()+1,
-                employee.getName(),
-                employee.getAge(),
-                employee.getGender(),
-                employee.getSalary());
-        employees.add(employeeToBeAdded);
-    }
-
-    @PutMapping (path ="/{employeeId}")
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeToBeUpdated){
-        return employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdated))
-                .get();
-    }
-
-    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdated) {
-        if (employeeToBeUpdated.getName() != null) {
-            employee.setName(employeeToBeUpdated.getName());
-        }
-        if (employeeToBeUpdated.getAge() != null) {
-            employee.setAge(employeeToBeUpdated.getAge());
-        }
-        if (employeeToBeUpdated.getGender() != null) {
-            employee.setGender(employeeToBeUpdated.getGender());
-        }
-        if (employeeToBeUpdated.getSalary() != null) {
-            employee.setSalary(employeeToBeUpdated.getSalary());
-        }
-        return employee;
-    }
+//    @GetMapping(params = {"page","pageSize"})
+//    public List<Employee> getEmployeesByPage(@RequestParam(name="page", required = true) Integer page, @RequestParam(name = "pageSize", required = true) Integer pageSize) {
+//        int skipvalue = (page-1)*pageSize;
+//        return employees.stream()
+//                .skip(skipvalue)
+//                .limit(pageSize)
+//                .collect(Collectors.toList());
+//    }
+//
+//    @GetMapping(params = {"gender"})
+//    public List<Employee> getEmployeesByGender(@RequestParam(name="gender", required = true) String gender){
+//        return employees.stream()
+//                .filter(employee -> employee.getGender().equals(gender))
+//                .collect(Collectors.toList());
+//    }
+//
+//    @PostMapping
+//    public void addEmployee(@RequestBody Employee employee) {
+//        Employee employeeToBeAdded = new Employee(employees.size()+1,
+//                employee.getName(),
+//                employee.getAge(),
+//                employee.getGender(),
+//                employee.getSalary());
+//        employees.add(employeeToBeAdded);
+//    }
+//
+//    @PutMapping (path ="/{employeeId}")
+//    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee employeeToBeUpdated){
+//        return employees.stream()
+//                .filter(employee -> employee.getId().equals(employeeId))
+//                .findFirst()
+//                .map(employee -> updateEmployeeInfo(employee, employeeToBeUpdated))
+//                .get();
+//    }
+//
+//    private Employee updateEmployeeInfo(Employee employee, Employee employeeToBeUpdated) {
+//        if (employeeToBeUpdated.getName() != null) {
+//            employee.setName(employeeToBeUpdated.getName());
+//        }
+//        if (employeeToBeUpdated.getAge() != null) {
+//            employee.setAge(employeeToBeUpdated.getAge());
+//        }
+//        if (employeeToBeUpdated.getGender() != null) {
+//            employee.setGender(employeeToBeUpdated.getGender());
+//        }
+//        if (employeeToBeUpdated.getSalary() != null) {
+//            employee.setSalary(employeeToBeUpdated.getSalary());
+//        }
+//        return employee;
+//    }
 }
