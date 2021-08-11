@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.model.Employee;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,15 @@ public class EmployeeService {
         return getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
+    }
+
+    public List<Employee> getEmployeesByPage(Integer pageIndex, Integer pageSize) {
+        int skipValue = ((pageIndex - 1) * pageSize);
+        return getAllEmployees()
+                .stream()
+                .skip(skipValue)
+                .limit(pageSize)
                 .collect(Collectors.toList());
     }
 }
