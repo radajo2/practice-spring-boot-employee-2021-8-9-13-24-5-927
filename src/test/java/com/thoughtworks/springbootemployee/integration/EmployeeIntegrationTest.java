@@ -52,6 +52,18 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    void should_return_employee_when_findById_given_employee_id() throws Exception {
+        int id = testEmployees.get(1).getId();
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Suho"))
+                .andExpect(jsonPath("$.age").value(30))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(900000));
+    }
+
+    @Test
     void should_create_new_employee_when_addEmployee_given_employee_information() throws Exception {
         //given
         String employee = "{\n" +
