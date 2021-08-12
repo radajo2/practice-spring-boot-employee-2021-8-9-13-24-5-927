@@ -10,29 +10,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeService {
+public class RetiringEmployeeService {
+    @Autowired
+    private RetiringEmployeeRepository retiringEmployeeRepository;
 
-    private EmployeeRepository employeeRepository;
-
-//    @Autowired
-//    private RetiringEmployeeRepository retiringEmployeeRepository;
-
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public RetiringEmployeeService(RetiringEmployeeRepository retiringEmployeeRepository) {
+        this.retiringEmployeeRepository = retiringEmployeeRepository;
     }
 
     public List<Employee> getAllEmployees() {
-       return employeeRepository.findAll();
-//        return retiringEmployeeRepository.getEmployees();
+//       return employeeRepository.findAll();
+        return retiringEmployeeRepository.getEmployees();
     }
 
     public Employee findById(Integer Id) {
-        return employeeRepository.findById(Id).orElse(null);
-//        return getAllEmployees()
-//                .stream()
-//                .filter(employee -> employee.getId().equals(Id))
-//                .findFirst()
-//                .orElse(null);
+//        return employeeRepository.findById(Id).orElse(null);
+        return getAllEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(Id))
+                .findFirst()
+                .orElse(null);
     }
 
     public List<Employee> findByGender(String gender) {
@@ -52,16 +49,15 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee newEmployeeInfo) {
-        employeeRepository.save(newEmployeeInfo);
-        return newEmployeeInfo;
+//        employeeRepository.save(newEmployeeInfo);
 //        return newEmployeeInfo;
-//        Employee employeeToBeAdded = new Employee(retiringEmployeeRepository.getEmployees().size()+1,
-//                newEmployeeInfo.getName(),
-//                newEmployeeInfo.getAge(),
-//                newEmployeeInfo.getGender(),
-//                newEmployeeInfo.getSalary());
-//        retiringEmployeeRepository.getEmployees().add(employeeToBeAdded);
-//        return employeeToBeAdded;
+        Employee employeeToBeAdded = new Employee(retiringEmployeeRepository.getEmployees().size()+1,
+                newEmployeeInfo.getName(),
+                newEmployeeInfo.getAge(),
+                newEmployeeInfo.getGender(),
+                newEmployeeInfo.getSalary());
+        retiringEmployeeRepository.getEmployees().add(employeeToBeAdded);
+        return employeeToBeAdded;
     }
 
     public Employee updateEmployee(Integer employeeId, Employee updatedEmployeeInfo) {
@@ -89,15 +85,15 @@ public class EmployeeService {
         return employee;
     }
 
-//    public Employee removeEmployee(Integer employeeId) {
-//        Employee removeEmployee = retiringEmployeeRepository.getEmployees()
-//                .stream()
-//                .filter(employee -> employee.getId().equals(employeeId))
-//                .findFirst()
-//                .orElse(null);
-//        retiringEmployeeRepository.getEmployees().remove(removeEmployee);
-//
-//        return removeEmployee;
-//    }
+    public Employee removeEmployee(Integer employeeId) {
+        Employee removeEmployee = retiringEmployeeRepository.getEmployees()
+                .stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .orElse(null);
+        retiringEmployeeRepository.getEmployees().remove(removeEmployee);
+
+        return removeEmployee;
+    }
 }
 
