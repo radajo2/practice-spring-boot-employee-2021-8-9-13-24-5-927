@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -49,4 +50,28 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[2].gender").value("male"))
                 .andExpect(jsonPath("$[2].salary").value(1000000));
     }
+
+    @Test
+    void should_create_new_employee_when_addEmployee_given_employee_information() throws Exception {
+        //given
+        String employee = "{\n" +
+                "    \"id\": 66,\n" +
+                "    \"name\": \"Jungkook\",\n" +
+                "    \"age\": 25,\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"salary\": 100000\n" +
+                "}";
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employee))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name").value("Jungkook"))
+                .andExpect(jsonPath("$.age").value(25))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(100000));
+
+    }
+
 }
