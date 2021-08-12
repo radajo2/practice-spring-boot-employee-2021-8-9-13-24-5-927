@@ -114,19 +114,26 @@ public class EmployeeServiceTest {
 //    void should_return_new_employee_when_addEmployee_given_employee_info() {
 //        //given
 //        List<Employee> employees = new ArrayList<>();
-//        given(retiringEmployeeRepository.getEmployees()).willReturn(employees);
-//        Employee newEmployee = new Employee(){{
-//            setName("Jungkook");
-//            setAge(23);
-//            setGender("male");
-//            setSalary(150000);
-//        }};
+//        //given(employeeRepository.findAll()).willReturn(employees);
+////        Employee newEmployee = new Employee(){{
+////            setName("Jungkook");
+////            setAge(23);
+////            setGender("male");
+////            setSalary(150000);
+////        }};
+//        Employee newEmployee = new Employee("Debidsas", 18, "male", 1500);
 //
 //        //when
 //        employeeService.addEmployee(newEmployee);
-//
 //        //then
-//        assertEquals(1, employees.size());
+//        assertNotNull(employeeService.getAllEmployees().stream()
+//                .filter(employee -> employee.getName().equals(newEmployee.getName()))
+//                .findFirst()
+//                .orElse(null));
+////        assertEquals(newEmployee, employees.stream()
+////                .filter(employee -> employee.equals(newEmployee))
+////                .findFirst()
+////                .get());
 //    }
 //
 //    @Test

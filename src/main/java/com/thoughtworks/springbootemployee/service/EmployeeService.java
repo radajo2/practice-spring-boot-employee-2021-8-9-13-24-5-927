@@ -27,11 +27,12 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer Id) {
-        return getAllEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(Id))
-                .findFirst()
-                .orElse(null);
+        return employeeRepository.findById(Id).orElse(null);
+//        return getAllEmployees()
+//                .stream()
+//                .filter(employee -> employee.getId().equals(Id))
+//                .findFirst()
+//                .orElse(null);
     }
 
     public List<Employee> findByGender(String gender) {
@@ -51,7 +52,9 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee newEmployeeInfo) {
-        return employeeRepository.save(newEmployeeInfo);
+        employeeRepository.save(newEmployeeInfo);
+        return newEmployeeInfo;
+//        return newEmployeeInfo;
 //        Employee employeeToBeAdded = new Employee(retiringEmployeeRepository.getEmployees().size()+1,
 //                newEmployeeInfo.getName(),
 //                newEmployeeInfo.getAge(),

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Employee {
@@ -14,6 +15,14 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
+    private Integer company_id;
+
+    public Employee(String name, Integer age, String gender, Integer salary) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+    }
 
     public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
         this.id = id;
