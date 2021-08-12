@@ -1,11 +1,11 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.RetiringEmployeeRepository;
 import com.thoughtworks.springbootemployee.model.Employee;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,12 +14,16 @@ public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
 
+//    @Autowired
+//    private RetiringEmployeeRepository retiringEmployeeRepository;
+
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getEmployees();
+       return employeeRepository.findAll();
+//        return retiringEmployeeRepository.getEmployees();
     }
 
     public Employee findById(Integer Id) {
@@ -47,13 +51,14 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee newEmployeeInfo) {
-        Employee employeeToBeAdded = new Employee(employeeRepository.getEmployees().size()+1,
-                newEmployeeInfo.getName(),
-                newEmployeeInfo.getAge(),
-                newEmployeeInfo.getGender(),
-                newEmployeeInfo.getSalary());
-        employeeRepository.getEmployees().add(employeeToBeAdded);
-        return employeeToBeAdded;
+        return employeeRepository.save(newEmployeeInfo);
+//        Employee employeeToBeAdded = new Employee(retiringEmployeeRepository.getEmployees().size()+1,
+//                newEmployeeInfo.getName(),
+//                newEmployeeInfo.getAge(),
+//                newEmployeeInfo.getGender(),
+//                newEmployeeInfo.getSalary());
+//        retiringEmployeeRepository.getEmployees().add(employeeToBeAdded);
+//        return employeeToBeAdded;
     }
 
     public Employee updateEmployee(Integer employeeId, Employee updatedEmployeeInfo) {
@@ -81,15 +86,15 @@ public class EmployeeService {
         return employee;
     }
 
-    public Employee removeEmployee(Integer employeeId) {
-        Employee removeEmployee = employeeRepository.getEmployees()
-                .stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .orElse(null);
-        employeeRepository.getEmployees().remove(removeEmployee);
-
-        return removeEmployee;
-    }
+//    public Employee removeEmployee(Integer employeeId) {
+//        Employee removeEmployee = retiringEmployeeRepository.getEmployees()
+//                .stream()
+//                .filter(employee -> employee.getId().equals(employeeId))
+//                .findFirst()
+//                .orElse(null);
+//        retiringEmployeeRepository.getEmployees().remove(removeEmployee);
+//
+//        return removeEmployee;
+//    }
 }
 
