@@ -24,16 +24,16 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_all_employee_when_call_get_employee_api() throws Exception {
         //given
-        final Employee employee = new Employee (3, "Joanna", 20, "male", 100);
+        final Employee employee = new Employee (1, "Joanna", 20, "female", 100);
         employeeRepository.save(employee);
         //when
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").isNumber())
-                .andExpect(jsonPath("$[0].name").value("David"))
+                .andExpect(jsonPath("$[0].name").value("Joanna"))
                 .andExpect(jsonPath("$[0].age").value(20))
-                .andExpect(jsonPath("$[0].gender").value("male"))
+                .andExpect(jsonPath("$[0].gender").value("female"))
                 .andExpect(jsonPath("$[0].salary").value(100));
     }
 }
