@@ -15,7 +15,7 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
-    private Integer company_id;
+    private Integer companyId;
 
     public Employee(String name, Integer age, String gender, Integer salary) {
         this.name = name;

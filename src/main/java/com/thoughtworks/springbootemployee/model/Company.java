@@ -15,7 +15,7 @@ public class Company {
     private Integer id;
     private String company_name;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "company_id")
+    @OneToMany (cascade = CascadeType.ALL, mappedBy = "companyId")
     private List<Employee> employees = new LinkedList<>();
 
     public Company() {}
