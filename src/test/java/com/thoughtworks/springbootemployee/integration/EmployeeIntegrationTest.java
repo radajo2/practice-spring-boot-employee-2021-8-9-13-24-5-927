@@ -75,6 +75,17 @@ public class EmployeeIntegrationTest {
     }
 
     @Test
+    void should_return_five_employees_per_list_when_getListByPage_given_pageIndex_is_1_and_pageSize_is_5() throws Exception {
+        int pageSize = 5;
+        int pageIndex = 1;
+        mockMvc.perform(MockMvcRequestBuilders.get("/employees")
+                .param("pageIndex", String.valueOf(pageIndex)).param("pageSize", String.valueOf(pageSize))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.*", hasSize(5)));
+    }
+
+    @Test
     void should_create_new_employee_when_addEmployee_given_employee_information() throws Exception {
         //given
         String employee = "{\n" +
