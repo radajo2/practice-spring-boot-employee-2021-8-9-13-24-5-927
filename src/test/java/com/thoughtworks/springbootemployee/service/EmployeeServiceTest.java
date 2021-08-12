@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -149,5 +150,26 @@ public class EmployeeServiceTest {
         //then
         assertEquals(updatedEmployeeInfo.getAge(), updateEmployee.getAge());
     }
+    @Test
+    void should_remove_existing_employee_when_removeEmployee_given_employee_id() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1, "Suho", 30, "female", 100000));
+        employees.add(new Employee(2, "Sehun", 26, "male", 105000));
+        employees.add(new Employee(3, "Chanyeol", 28, "male", 20000));
+        employees.add(new Employee(4, "Xiumin", 25, "male", 70000));
+        employees.add(new Employee(5, "Baekhyun", 22, "male", 80000));
+        employees.add(new Employee(6, "Chen", 27, "female", 900000));
+        employees.add(new Employee(7, "Kyungsoo", 26, "male", 600000));
+        employees.add(new Employee(8, "Lay", 29, "male", 900000));
+        employees.add(new Employee(9, "Jungkook", 20, "male", 500000));
+        given(employeeRepository.getEmployees()).willReturn(employees);
 
+        //when
+        Employee deletedEmployee = employeeService.removeEmployee(1);
+
+        //then
+        assertNotNull(deletedEmployee);
+        assertEquals(8, employees.size());
+    }
 }
