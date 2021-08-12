@@ -19,12 +19,10 @@ public class RetiringEmployeeService {
     }
 
     public List<Employee> getAllEmployees() {
-//       return employeeRepository.findAll();
         return retiringEmployeeRepository.getEmployees();
     }
 
     public Employee findById(Integer Id) {
-//        return employeeRepository.findById(Id).orElse(null);
         return getAllEmployees()
                 .stream()
                 .filter(employee -> employee.getId().equals(Id))
@@ -49,8 +47,6 @@ public class RetiringEmployeeService {
     }
 
     public Employee addEmployee(Employee newEmployeeInfo) {
-//        employeeRepository.save(newEmployeeInfo);
-//        return newEmployeeInfo;
         Employee employeeToBeAdded = new Employee(retiringEmployeeRepository.getEmployees().size()+1,
                 newEmployeeInfo.getName(),
                 newEmployeeInfo.getAge(),
