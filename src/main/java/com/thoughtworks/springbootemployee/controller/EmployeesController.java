@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.model.EmployeeRequest;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.service.RetiringEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeesController {
+    @Autowired
+    EmployeeMapper employeeMapper;
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -37,13 +42,13 @@ public class EmployeesController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee addEmployee(@RequestBody Employee newEmployee) {
-        return employeeService.addEmployee(newEmployee);
+    public Employee addEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return employeeService.addEmployee(employeeMapper.toEntity((employeeRequest)));
     }
 
     @PutMapping (path ="/{employeeId}")
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody Employee updateEmployeeInfo){
-        return employeeService.updateEmployee(employeeId,updateEmployeeInfo);
+    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeRequest){
+        return employeeService.updateEmployee(employeeId,employeeMapper.toEntity(employeeRequest));
     }
 
     @DeleteMapping(path = "/{employeeId}")

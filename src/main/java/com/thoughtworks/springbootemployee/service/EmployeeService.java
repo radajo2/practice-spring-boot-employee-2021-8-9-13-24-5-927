@@ -2,12 +2,12 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -22,7 +22,8 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer Id) {
-        return employeeRepository.findById(Id).orElse(null);
+        return employeeRepository.findById(Id)
+                .orElseThrow(()-> new EmployeeNotFoundException("Employee Not Exist!"));
     }
 
     public List<Employee> findByGender(String gender) {
