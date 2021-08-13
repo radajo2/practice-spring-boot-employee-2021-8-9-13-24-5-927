@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class EmployeeIntegrationTest {
     public void setup(){
         testEmployees = Arrays.asList
                 (new Employee(1, "Joanna", 20, "female", 100),
-                (new Employee(2, "Suho", 30, "male", 900000)),
+                (new Employee(2, "Suho", 25, "male", 900000)),
                 (new Employee(4, "Kyungsoo", 19, "male", 1000000)),
                 (new Employee(5, "Chanyeol", 26, "female", 1000000)),
                 (new Employee(8, "Kai", 18, "female", 1000000)),
@@ -112,7 +113,7 @@ public class EmployeeIntegrationTest {
     void should_update_employee_info_when_updateEmployee_given_employee_information() throws Exception {
         //given
         String newEmployeeInfo = "{\n" +
-                "    \"age\": 25\n" +
+                "    \"age\": 30\n" +
                 "}";
 
         //when
@@ -121,7 +122,20 @@ public class EmployeeIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(newEmployeeInfo))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.age").value("25"));
+                .andExpect(jsonPath("$.age").value("30"));
     }
 
+    @Test
+    void should_remove_when_removeEmployee_given_employee_id() throws Exception {
+        //given
+        final Employee employee = new Employee(100, "Hotdog", 25, "female", 1000);
+        final Employee savedEmployee = employeeRepository.save(employee);
+
+        //when
+        int id = savedEmployee.getId();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
