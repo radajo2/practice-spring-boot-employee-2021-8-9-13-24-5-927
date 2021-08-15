@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -125,6 +126,31 @@ public class RetiringCompanyServiceTest {
 
         //then
         assertEquals(updatedCompanyInfo.getCompany_name(), updateCompany.getCompany_name());
+    }
+
+    @Test
+    void should_remove_existing_company_when_removeCompany_given_company_id() {
+        //given
+        List<Company> companies = new ArrayList<>();
+        companies.add(new Company(1,"SM Entertainment", Arrays.asList(
+                new Employee(1, "Joanna", 20, "female", 100),
+                new Employee(2, "Suho", 25, "male", 900000),
+                new Employee(4, "Kyungsoo", 19, "male", 1000000),
+                new Employee(5, "Chanyeol", 26, "female", 1000000),
+                new Employee(6, "Kai", 18, "female", 1000000),
+                new Employee(7, "Xiumin", 25, "male", 150000))));
+        companies.add(new Company(2, "Big Hit Entertainment", Arrays.asList(
+                new Employee(1,"Jungkook",27,"male",50000),
+                new Employee(2,"Taehyung",25,"male",100000),
+                new Employee(3,"Jin",25,"male",600000))));
+        given(retiringCompanyRepository.getCompanies()).willReturn(companies);
+
+        //when
+        Company deletedCompany = retiringCompanyService.removeCompany(2);
+
+        //then
+        assertNotNull(deletedCompany);
+        assertEquals(1, companies.size());
     }
 
 }

@@ -50,4 +50,32 @@ public class RetiringCompanyService {
         retiringCompanyRepository.getCompanies().add(newCompany);
         return newCompany;
     }
+
+    public Company updateCompany(Integer companyId, Company companyInfo) {
+        return getAllCompanies()
+                .stream()
+                .filter(company -> company.getId().equals(companyId))
+                .findFirst()
+                .map(company -> updateCompanyInfo(company, companyInfo))
+                .get();
+    }
+
+    private Company updateCompanyInfo(Company company, Company companyInfo) {
+        if (companyInfo.getCompany_name() != null){
+            company.setCompany_name(companyInfo.getCompany_name());
+        }
+        if (!companyInfo.getEmployees().isEmpty() && companyInfo.getEmployees() != null){
+            company.setEmployees(companyInfo.getEmployees());
+        }
+        return company;
+    }
+
+    public Company removeCompany(Integer companyId) {
+        Company removeCompany = retiringCompanyRepository.getCompanies()
+                .stream()
+                .filter(company -> company.getId().equals(companyId))
+                .findFirst().orElse(null);
+        retiringCompanyRepository.getCompanies().remove(removeCompany);
+        return removeCompany;
+    }
 }
