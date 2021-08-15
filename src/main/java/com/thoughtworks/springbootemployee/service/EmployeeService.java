@@ -23,7 +23,7 @@ public class EmployeeService {
 
     public Employee findById(Integer Id) {
         return employeeRepository.findById(Id)
-                .orElseThrow(()-> new EmployeeNotFoundException("Employee Not Exist!"));
+                .orElseThrow(()-> new EmployeeNotFoundException());
     }
 
     public List<Employee> findByGender(String gender) {
@@ -64,6 +64,6 @@ public class EmployeeService {
     public Employee removeEmployee(Integer employeeId) {
         Optional<Employee> removeEmployee = employeeRepository.findById(employeeId);
         employeeRepository.deleteById(employeeId);
-        return removeEmployee.orElseThrow(()-> new EmployeeNotFoundException("Employee Not Exist!"));
+        return removeEmployee.orElseThrow(()-> new EmployeeNotFoundException());
     }
 }
