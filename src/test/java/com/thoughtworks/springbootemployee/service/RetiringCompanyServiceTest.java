@@ -111,4 +111,20 @@ public class RetiringCompanyServiceTest {
         assertEquals("JYP Entertainment", newCompany.getCompany_name());
     }
 
+    @Test
+    void should_update_existing_company_when_updateCompany_given_company_info() {
+        //given
+        given(retiringCompanyRepository.getCompanies()).willReturn(testCompanies);
+        Company updateCompany = new Company(){{
+            setCompany_name("YG Entertainment");
+            setEmployees(Arrays.asList(new Employee()));
+        }};
+
+        //when
+        Company updatedCompanyInfo = retiringCompanyService.updateCompany(1, updateCompany);
+
+        //then
+        assertEquals(updatedCompanyInfo.getCompany_name(), updateCompany.getCompany_name());
+    }
+
 }
