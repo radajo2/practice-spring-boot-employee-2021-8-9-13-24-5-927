@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
 public class CompanyRequest {
     private String company_name;
     private List<Employee> employees = new LinkedList<>();
