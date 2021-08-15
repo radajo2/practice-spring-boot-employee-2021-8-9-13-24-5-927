@@ -94,5 +94,21 @@ public class RetiringCompanyServiceTest {
         assertEquals(mockCount, actualCount);
     }
 
+    @Test
+    void should_return_new_company_when_addCompany_given_company_info() {
+        //given
+        List<Company> companies = new ArrayList<>();
+        given(retiringCompanyRepository.getCompanies()).willReturn(companies);
+        Company newCompany = new Company(){{
+            setCompany_name("JYP Entertainment");
+            setEmployees(Arrays.asList(new Employee(1, "Joanna", 23, "female", 100000)));
+        }};
+
+        //when
+        retiringCompanyService.addCompany(newCompany);
+
+        //then
+        assertEquals("JYP Entertainment", newCompany.getCompany_name());
+    }
 
 }

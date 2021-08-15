@@ -42,4 +42,12 @@ public class RetiringCompanyService {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Company addCompany(Company companyInfo) {
+        Company newCompany = new Company(retiringCompanyRepository.getCompanies().size()+1,
+                companyInfo.getCompany_name(),
+                companyInfo.getEmployees());
+        retiringCompanyRepository.getCompanies().add(newCompany);
+        return newCompany;
+    }
 }
