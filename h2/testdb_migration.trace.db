@@ -1,0 +1,5 @@
+2021-08-15 23:49:51 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO EMPLOYEE (NAME, AGE, SALARY, COMPANY_ID, GENDER) 
+VALUES ('Sample', 25, 100000, 1, 'male'),[*]"; expected "ROW, (, DEFAULT, NOT, EXISTS, INTERSECTS, UNIQUE"; SQL statement:
+INSERT INTO EMPLOYEE (NAME, AGE, SALARY, COMPANY_ID, GENDER) 
+VALUES ('Sample', 25, 100000, 1, 'male'), [42001-200]

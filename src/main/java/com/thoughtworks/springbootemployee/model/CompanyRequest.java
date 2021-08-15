@@ -7,12 +7,7 @@ import java.util.Objects;
 
 @Entity
 public class CompanyRequest {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String company_name;
-
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "companyId")
     private List<Employee> employees = new LinkedList<>();
 
     public CompanyRequest() {}

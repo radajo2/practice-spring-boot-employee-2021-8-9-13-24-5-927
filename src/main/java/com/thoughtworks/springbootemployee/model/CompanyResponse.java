@@ -1,20 +1,20 @@
 package com.thoughtworks.springbootemployee.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
-@Entity
-public class CompanyRequest {
-    private String company_name;
+public class CompanyResponse {
+    private Integer id;
+    private String companyName;
+    private Integer employeeNumber;
     private List<Employee> employees = new LinkedList<>();
 
-    public CompanyRequest() {}
+    public CompanyResponse() {}
 
-    public CompanyRequest(String name, List<Employee> employees) {
-        this.company_name = name;
-        this.employees = employees;
+    public CompanyResponse(Integer id, String companyName, List<Employee> employees) {
+        this.id = id;
+        this.companyName = companyName;
     }
 
     public List<Employee> getEmployees() {
@@ -22,14 +22,30 @@ public class CompanyRequest {
     }
 
     public String getCompany_name() {
-        return company_name;
+        return companyName;
     }
 
     public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+        this.companyName = company_name;
     }
 
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Integer getEmployeeNumber() {
+        return employeeNumber;
+    }
+
+    public void setEmployeeNumber(Integer employeeNumber) {
+        this.employeeNumber = employeeNumber;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

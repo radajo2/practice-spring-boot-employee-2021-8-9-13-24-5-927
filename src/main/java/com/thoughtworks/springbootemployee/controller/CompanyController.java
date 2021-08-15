@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.CompanyResponse;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private CompanyMapper companyMapper;
+
     @GetMapping
     public List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
@@ -26,8 +31,8 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/{companyId}")
-    public Company findById(@PathVariable Integer companyId){
-        return companyService.findById(companyId);
+    public CompanyResponse findById(@PathVariable Integer companyId){
+        return companyMapper.toResponse(companyService.findById(companyId));
     }
 
     @GetMapping(params = {"pageIndex", "pageSize"})
