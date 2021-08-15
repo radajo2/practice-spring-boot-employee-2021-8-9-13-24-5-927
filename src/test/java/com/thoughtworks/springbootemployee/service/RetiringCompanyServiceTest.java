@@ -57,5 +57,17 @@ public class RetiringCompanyServiceTest {
         assertEquals(testCompanies.size(), actualCompanies.size());
     }
 
+    @Test
+    void should_return_specific_company_when_findById_given_company_id() {
+        //given
+        given(retiringCompanyRepository.getCompanies()).willReturn(testCompanies);
+
+        //when
+        Company actualCompany = retiringCompanyService.findById(2);
+
+        //then
+        assertEquals(testCompanies.get(1).getId(), actualCompany.getId());
+    }
+
 
 }

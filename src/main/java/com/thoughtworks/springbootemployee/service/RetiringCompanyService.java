@@ -22,8 +22,11 @@ public class RetiringCompanyService {
         return retiringCompanyRepository.getCompanies();
     }
 
-//    public List<Employee> getAllEmployeesByCompanyId(Integer companyId) {
-//        Company company = retiringCompanyRepository.findById(companyId).orElse(null);
-//        return company.getEmployees();
-//    }
+    public Company findById(Integer companyId) {
+        return getAllCompanies()
+                .stream()
+                .filter(company -> company.getId().equals(companyId))
+                .findFirst()
+                .orElse(null);
+    }
 }
