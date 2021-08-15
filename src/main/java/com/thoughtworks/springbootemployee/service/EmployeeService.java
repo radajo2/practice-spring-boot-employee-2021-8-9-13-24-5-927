@@ -64,6 +64,6 @@ public class EmployeeService {
     public Employee removeEmployee(Integer employeeId) {
         Optional<Employee> removeEmployee = employeeRepository.findById(employeeId);
         employeeRepository.deleteById(employeeId);
-        return removeEmployee.orElse(null);
+        return removeEmployee.orElseThrow(()-> new EmployeeNotFoundException("Employee Not Exist!"));
     }
 }
