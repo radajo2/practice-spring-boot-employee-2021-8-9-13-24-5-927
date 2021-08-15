@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.model.EmployeeRequest;
+import com.thoughtworks.springbootemployee.model.EmployeeResponse;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import com.thoughtworks.springbootemployee.service.RetiringEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,8 @@ public class EmployeesController {
     }
 
     @GetMapping(path = "/{employeeId}")
-    public Employee findById(@PathVariable Integer employeeId) {
-        return employeeService.findById(employeeId);
+    public EmployeeResponse findById(@PathVariable Integer employeeId) {
+        return employeeMapper.toResponse(employeeService.findById(employeeId));
     }
 
     @GetMapping(params = {"gender"})
@@ -47,8 +48,8 @@ public class EmployeesController {
     }
 
     @PutMapping (path ="/{employeeId}")
-    public Employee updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeRequest){
-        return employeeService.updateEmployee(employeeId,employeeMapper.toEntity(employeeRequest));
+    public EmployeeResponse updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeRequest employeeRequest){
+        return employeeMapper.toResponse(employeeService.updateEmployee(employeeId,employeeMapper.toEntity(employeeRequest)));
     }
 
     @DeleteMapping(path = "/{employeeId}")
