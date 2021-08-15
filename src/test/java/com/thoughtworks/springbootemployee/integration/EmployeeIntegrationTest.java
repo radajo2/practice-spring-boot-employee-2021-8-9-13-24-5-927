@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.integration;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,12 @@ public class EmployeeIntegrationTest {
                 (new Employee(5, "Chanyeol", 26, "female", 1000000)),
                 (new Employee(8, "Kai", 18, "female", 1000000)),
                 (new Employee(65, "Xiumin", 25, "male", 150000)));
+                employeeRepository.saveAll(testEmployees);
+    }
+
+    @AfterEach
+    void tearDown(){
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -50,19 +57,24 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[2].name").value("Kyungsoo"))
                 .andExpect(jsonPath("$[2].age").value(19))
                 .andExpect(jsonPath("$[2].gender").value("male"))
-                .andExpect(jsonPath("$[2].salary").value(1000000));
+                .andExpect(jsonPath("$[2].salary").value(1000000))
+                .andExpect(jsonPath("$[3].name").value("Chanyeol"));
     }
 
     @Test
     void should_return_employee_when_findById_given_employee_id() throws Exception {
-        int id = testEmployees.get(1).getId();
+        final Employee employee = new Employee(50, "Joanna", 25, "female", 1000);
+        final Employee savedEmployee = employeeRepository.save(employee);
+
+        //when
+        int id = savedEmployee.getId();
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").isNumber())
-                .andExpect(jsonPath("$.name").value("Suho"))
-                .andExpect(jsonPath("$.age").value(30))
-                .andExpect(jsonPath("$.gender").value("male"))
-                .andExpect(jsonPath("$.salary").value(900000));
+                .andExpect(jsonPath("$.name").value("Joanna"))
+                .andExpect(jsonPath("$.age").value(25))
+                .andExpect(jsonPath("$.gender").value("female"))
+                .andExpect(jsonPath("$.salary").value(1000));
     }
 
     @Test
@@ -72,7 +84,7 @@ public class EmployeeIntegrationTest {
                 .param("gender", gender)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(4)));
+                .andExpect(jsonPath("$[*].gender", Matchers.hasItems("male")));
     }
 
     @Test
@@ -83,16 +95,17 @@ public class EmployeeIntegrationTest {
                 .param("pageIndex", String.valueOf(pageIndex)).param("pageSize", String.valueOf(pageSize))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.*", hasSize(5)));
+                .andExpect(jsonPath("$.*", hasSize(5)))
+                .andExpect(jsonPath("$[0].name").value("Joanna"));
     }
 
     @Test
     void should_create_new_employee_when_addEmployee_given_employee_information() throws Exception {
         //given
         String employee = "{\n" +
-                "    \"id\": 66,\n" +
-                "    \"name\": \"Jungkook\",\n" +
-                "    \"age\": 25,\n" +
+                "    \"id\": 100,\n" +
+                "    \"name\": \"Taehyung\",\n" +
+                "    \"age\": 23,\n" +
                 "    \"gender\": \"male\",\n" +
                 "    \"salary\": 100000\n" +
                 "}";
@@ -102,8 +115,8 @@ public class EmployeeIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(employee))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("Jungkook"))
-                .andExpect(jsonPath("$.age").value(25))
+                .andExpect(jsonPath("$.name").value("Taehyung"))
+                .andExpect(jsonPath("$.age").value(23))
                 .andExpect(jsonPath("$.gender").value("male"))
                 .andExpect(jsonPath("$.salary").value(100000));
 
@@ -112,17 +125,22 @@ public class EmployeeIntegrationTest {
     @Test
     void should_update_employee_info_when_updateEmployee_given_employee_information() throws Exception {
         //given
+        final Employee employee = new Employee(100, "Hotdog", 25, "female", 1000);
+        final Employee savedEmployee = employeeRepository.save(employee);
         String newEmployeeInfo = "{\n" +
-                "    \"age\": 30\n" +
+                "    \"id\": 100,\n" +
+                "    \"name\": \"Taehyung\",\n" +
+                "    \"age\": 23,\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"salary\": 100000\n" +
                 "}";
 
-        //when
-        int id = testEmployees.get(1).getId();
+        int id = savedEmployee.getId();
         mockMvc.perform(MockMvcRequestBuilders.put("/employees/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(newEmployeeInfo))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.age").value("30"));
+                .andExpect(jsonPath("$.age").value("23"));
     }
 
     @Test
