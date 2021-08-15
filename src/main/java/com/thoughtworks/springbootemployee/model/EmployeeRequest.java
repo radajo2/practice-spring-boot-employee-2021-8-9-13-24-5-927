@@ -7,8 +7,6 @@ import javax.persistence.Id;
 
 @Entity
 public class EmployeeRequest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
     private Integer age;
     private String gender;
@@ -16,7 +14,6 @@ public class EmployeeRequest {
     private Integer companyId;
 
     public EmployeeRequest(Integer id, String name, Integer age, String gender, Integer salary, Integer companyId) {
-//        this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
@@ -58,4 +55,12 @@ public class EmployeeRequest {
     }
 
     public EmployeeRequest(){}
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
 }
