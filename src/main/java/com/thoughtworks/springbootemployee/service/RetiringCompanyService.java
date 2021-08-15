@@ -29,4 +29,8 @@ public class RetiringCompanyService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public List<Employee> getAllEmployeesByCompanyId(Integer companyId) {
+        return findById(companyId).getEmployees();
+    }
 }

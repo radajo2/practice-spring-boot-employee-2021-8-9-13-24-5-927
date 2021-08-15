@@ -69,5 +69,17 @@ public class RetiringCompanyServiceTest {
         assertEquals(testCompanies.get(1).getId(), actualCompany.getId());
     }
 
+    @Test
+    void should_return_all_employees_when_getAllEmployeesByCompanyId_given_company_id() {
+        //given
+        given(retiringCompanyRepository.getCompanies()).willReturn(testCompanies);
+
+        //when
+        List<Employee> actualEmployeeList = retiringCompanyService.getAllEmployeesByCompanyId(2);
+
+        //then
+        assertEquals(testCompanies.get(1).getEmployees(), actualEmployeeList);
+    }
+
 
 }
