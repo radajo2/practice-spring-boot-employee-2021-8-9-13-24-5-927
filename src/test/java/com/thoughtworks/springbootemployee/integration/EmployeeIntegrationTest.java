@@ -53,7 +53,6 @@ public class EmployeeIntegrationTest {
         //then
         mockMvc.perform(MockMvcRequestBuilders.get("/employees"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[2].id").isNumber())
                 .andExpect(jsonPath("$[2].name").value("Kyungsoo"))
                 .andExpect(jsonPath("$[2].age").value(19))
                 .andExpect(jsonPath("$[2].gender").value("male"))
@@ -70,7 +69,6 @@ public class EmployeeIntegrationTest {
         int id = savedEmployee.getId();
         mockMvc.perform(MockMvcRequestBuilders.get("/employees/{id}", id))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").isNumber())
                 .andExpect(jsonPath("$.name").value("Joanna"))
                 .andExpect(jsonPath("$.age").value(25))
                 .andExpect(jsonPath("$.gender").value("female"))
